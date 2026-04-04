@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">PeaceKeeper</string>
+    <string name="description_text">This app requires permissions to mute calls from numbers not in your contacts.</string>
+    <string name="status_label">App Status:</string>
+    <string name="status_not_ready">Not Setup</string>
+    <string name="status_ready">Ready and Screening Calls</string>
+    <string name="setup_button">Setup App</string>
+</resources>
