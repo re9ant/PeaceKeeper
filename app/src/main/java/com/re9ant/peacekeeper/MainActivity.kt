@@ -1,4 +1,4 @@
-package com.example.unknowncallermuter
+package com.re9ant.peacekeeper
 
 import android.Manifest
 import android.app.role.RoleManager
@@ -91,7 +91,6 @@ class MainActivity : AppCompatActivity() {
     private val pickContactLauncher = registerForActivityResult(ActivityResultContracts.PickContact()) { contactUri ->
         contactUri?.let { uri ->
             try {
-                // Get contact id
                 var contactId: String? = null
                 var hasPhoneNumber = 0
                 val cursor = contentResolver.query(uri, null, null, null, null)
@@ -110,28 +109,23 @@ class MainActivity : AppCompatActivity() {
                         arrayOf(contactId),
                         null
                     )
-                    
-                    var added = false
+
                     phoneCursor?.use { pCursor ->
                         if (pCursor.moveToFirst()) {
                             val number = pCursor.getString(pCursor.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone.NUMBER))
                             val name = pCursor.getString(pCursor.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
                             val normalizedNumber = number.replace(Regex("[^0-9+]"), "")
                             val entry = "$name ($normalizedNumber)"
-                            
+
                             if (!mutedContactsList.contains(entry)) {
                                 mutedContactsList.add(entry)
                                 saveMutedContacts()
                                 mutedContactsAdapter.notifyDataSetChanged()
-                                added = true
                                 Toast.makeText(this, "Added $name to muted list", Toast.LENGTH_SHORT).show()
                             } else {
                                 Toast.makeText(this, "Contact already in list", Toast.LENGTH_SHORT).show()
                             }
                         }
-                    }
-                    if (!added) {
-                        // In case we couldn't read the number properly
                     }
                 } else {
                     Toast.makeText(this, "Contact does not have a phone number", Toast.LENGTH_SHORT).show()

@@ -14,3 +14,8 @@
 .cxx
 local.properties
 /app/build/
+
+# Keystore — never commit these
+*.jks
+*.keystore
+keystore.properties
